@@ -4,8 +4,13 @@ const ThemeContext = React.createContext();
 
 function App() {
   const [darkTheme, setDarkTheme] = useState(false);
+  const [secondState, setSecondState] = useState('Print 2nd state');
   return (
-    <ThemeContext.Provider value={darkTheme}>
+    <ThemeContext.Provider
+      value={{
+        darkTheme: [darkTheme, setDarkTheme],
+        secondState: [secondState, setSecondState],
+      }}>
       <button>Click here</button>
       <FuncChild />
       <ClassChild />
@@ -14,12 +19,15 @@ function App() {
 }
 
 function FuncChild() {
-  const darkTheme = useContext(ThemeContext);
+  const {darkTheme, secondState} = useContext(ThemeContext);
+  const [themeValue, setThemeValue] = darkTheme;
+  const [secondValue, setSecondValue] = secondState;
   function themeStyles(darkTheme) {
     return {
       display: 'flex',
       alignIems: 'center',
       justifyContent: 'center',
+      flexDirection: 'column',
       backgroundColor: darkTheme ? 'black' : 'grey',
       margin: '10px',
       color: 'white',
@@ -27,8 +35,10 @@ function FuncChild() {
   }
 
   return (
-    <div style={themeStyles(darkTheme)}>
+    <div style={themeStyles(themeValue)}>
       <p>Function</p>
+      <p>this is {secondValue}</p>
+      {console.log(typeof secondValue)}
     </div>
   );
 }
