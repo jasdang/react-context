@@ -14,6 +14,7 @@ function App() {
 }
 
 function FuncChild() {
+  const darkTheme = useContext(ThemeContext);
   function themeStyles(darkTheme) {
     return {
       display: 'flex',
@@ -26,7 +27,7 @@ function FuncChild() {
   }
 
   return (
-    <div style={themeStyles(true)}>
+    <div style={themeStyles(darkTheme)}>
       <p>Function</p>
     </div>
   );
